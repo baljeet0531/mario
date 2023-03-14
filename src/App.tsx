@@ -33,12 +33,12 @@ const config: Phaser.Types.Core.GameConfig = {
   pixelArt: true,
   physics: {
     default: "matter",
-    matter: {
-      debug: {
-        showBody: true,
-        showStaticBody: true,
-      },
-    },
+    // matter: {
+    //   debug: {
+    //     showBody: true,
+    //     showStaticBody: true,
+    //   },
+    // },
   },
   scene: SceneMatter,
   parent: "game-content",

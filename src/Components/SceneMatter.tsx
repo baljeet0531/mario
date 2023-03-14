@@ -11,12 +11,12 @@ export default class GameScene extends Phaser.Scene {
   }
   create() {
     this.matter.world.setBounds();
-    var map1 = this.make.tilemap({ key: "map1" });
-    var tileset1 = map1.addTilesetImage("super_mario", "tiles1");
-    var tileset2 = map1.addTilesetImage("goomba_trans", "tiles2");
+    const map1 = this.make.tilemap({ key: "map1" });
+    const tileset1 = map1.addTilesetImage("super_mario", "tiles1");
+    const tileset2 = map1.addTilesetImage("goomba_trans", "tiles2");
 
-    var layer1 = map1.createLayer("Background", tileset1, 0, 0);
-    var layer2 = map1.createLayer("Collide", [tileset1, tileset2], 0, 0);
+    map1.createLayer("Background", tileset1, 0, 0);
+    const layer2 = map1.createLayer("Collide", [tileset1, tileset2], 0, 0);
 
     layer2.setCollision([14, 15, 40, 45]);
 
@@ -33,20 +33,20 @@ export default class GameScene extends Phaser.Scene {
 
     this.matter.add.mouseSpring({ length: 1 });
 
-    this.matter.world.on("collisionstart", function (event: any) {
-      console.log(event);
-      event.pairs.forEach(({ collision }: any) => {
-        console.log(collision);
-        const { normal } = collision;
-        console.log(normal);
+    // this.matter.world.on("collisionstart", function (event: any) {
+    //   console.log(event);
+    //   event.pairs.forEach(({ collision }: any) => {
+    //     console.log(collision);
+    //     const { normal } = collision;
+    //     console.log(normal);
 
-        // determine the direction of the collision based on the normal vector
-        // const  direction = new Phaser.Math.Vector2(normal.x, normal.y);
+    //     // determine the direction of the collision based on the normal vector
+    //     // const  direction = new Phaser.Math.Vector2(normal.x, normal.y);
 
-        // do something with the direction of the collision
-        // console.log("Collision direction:", direction.toString());
-      });
-    });
+    //     // do something with the direction of the collision
+    //     // console.log("Collision direction:", direction.toString());
+    //   });
+    // });
   }
 
   update() {
