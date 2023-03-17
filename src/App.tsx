@@ -13,11 +13,11 @@ window.onload = function () {
 
     if (canvas) {
       if (wRatio < gameRatio) {
-        canvas.style.width = ww + "px";
-        canvas.style.height = ww / gameRatio + "px";
+        canvas.style.width = ww * 0.9 + "px";
+        canvas.style.height = (ww / gameRatio) * 0.9 + "px";
       } else {
-        canvas.style.width = wh * gameRatio + "px";
-        canvas.style.height = wh + "px";
+        canvas.style.width = wh * gameRatio * 0.9 + "px";
+        canvas.style.height = wh * 0.9 + "px";
       }
     }
   }
