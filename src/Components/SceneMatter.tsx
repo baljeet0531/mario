@@ -4,52 +4,84 @@ export default class GameScene extends Phaser.Scene {
   private player!: Phaser.Physics.Matter.Image;
 
   preload() {
-    this.load.tilemapTiledJSON("map1", "assets/tilemaps/maps/mario.json");
-    this.load.image("tiles1", "assets/tilemaps/tiles/super_mario.png");
-    this.load.image("tiles2", "assets/tilemaps/tiles/goomba_trans.png");
-    this.load.image("player", "assets/tilemaps/tiles/mario_trans.png");
+    this.load.tilemapTiledJSON("map1", "assets/tilemaps/maps/mario2x.json");
+    this.load.image("tiles1", "assets/tilemaps/tiles/super_mario2x.png");
+    this.load.image("tiles2", "assets/tilemaps/tiles/goomba_trans2x.png");
+    this.load.image("player", "assets/tilemaps/tiles/mario_trans2x.png");
+    this.load.image("info1", "assets/info/info (1).jpg");
+    this.load.image("info2", "assets/info/info (2).jpg");
+    this.load.image("info3", "assets/info/info (3).jpg");
+    this.load.image("info4", "assets/info/info (4).jpg");
   }
   create() {
     this.matter.world.setBounds();
     const map1 = this.make.tilemap({ key: "map1" });
-    const tileset1 = map1.addTilesetImage("super_mario", "tiles1");
-    const tileset2 = map1.addTilesetImage("goomba_trans", "tiles2");
+    const tileSet1 = map1.addTilesetImage("super_mario2x", "tiles1");
+    const tileSet2 = map1.addTilesetImage("goomba_trans2x", "tiles2");
 
-    map1.createLayer("Background", tileset1, 0, 0);
-    const layer2 = map1.createLayer("Collide", [tileset1, tileset2], 0, 0);
+    map1.createLayer("Background", tileSet1, 0, 0);
+    const layer2 = map1.createLayer("Collide", [tileSet1, tileSet2], 0, 0);
 
     layer2.setCollision([14, 15, 40, 45]);
 
-    // Convert the layer. Any colliding tiles will be given a Matter body. If a tile has collision
-    // shapes from Tiled, these will be loaded. If not, a default rectangle body will be used. The
-    // body will be accessible via tile.physics.matterBody.
-    this.matter.world.convertTilemapLayer(layer2);
+    this.matter.world.convertTilemapLayer(layer2).setBounds();
 
-    this.player = this.matter.add.image(60, 100, "player", undefined, {
+    this.player = this.matter.add.image(120, 896, "player", undefined, {
       label: "player",
     });
-    this.player.setBounce(0.1);
-    this.player.setFriction(1);
+    this.player.setBounce(0.3);
+    this.player.setFriction(0.9);
 
     this.matter.add.mouseSpring({ length: 1 });
 
-    // this.matter.world.on("collisionstart", function (event: any) {
-    //   console.log(event);
-    //   event.pairs.forEach(({ collision }: any) => {
-    //     console.log(collision);
-    //     const { normal } = collision;
-    //     console.log(normal);
+    const infoImages = [
+      this.add.image(320, 480, "info1"),
+      this.add.image(320, 480, "info2"),
+      this.add.image(320, 480, "info3"),
+      this.add.image(320, 480, "info4"),
+    ];
+    infoImages.forEach((infoImage) => {
+      infoImage.setVisible(false);
+      infoImage.setInteractive();
+      infoImage.on("pointerup", () => {
+        infoImage.setVisible(false);
+      });
+    });
 
-    //     // determine the direction of the collision based on the normal vector
-    //     // const  direction = new Phaser.Math.Vector2(normal.x, normal.y);
-
-    //     // do something with the direction of the collision
-    //     // console.log("Collision direction:", direction.toString());
-    //   });
-    // });
+    this.matter.world.on("collisionstart", (event: any) => {
+      event.pairs.forEach(({ collision }: any) => {
+        const { id } = collision.bodyA;
+        const { y } = collision.normal;
+        if (id === 5 && y === -1) {
+          infoImages[0].setVisible(true);
+        } else if (id === 9 && y === -1) {
+          infoImages[1].setVisible(true);
+        } else if (id === 11 && y === -1) {
+          infoImages[2].setVisible(true);
+        } else if (id === 13 && y === 1) {
+          infoImages[3].setVisible(true);
+        }
+      });
+    });
   }
 
   update() {
     this.player.setAngularVelocity(0);
+    if (this.player.x > 640) {
+      this.player.setX(640);
+      this.player.setVelocity(0);
+    }
+    if (this.player.x < 0) {
+      this.player.setX(0);
+      this.player.setVelocity(0);
+    }
+    if (this.player.y > 896) {
+      this.player.setY(880);
+      this.player.setVelocity(0);
+    }
+    if (this.player.y < 0) {
+      this.player.setY(0);
+      this.player.setVelocity(0);
+    }
   }
 }

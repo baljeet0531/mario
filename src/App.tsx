@@ -22,23 +22,17 @@ window.onload = function () {
     }
   }
   resize();
-  window.addEventListener("resize", resize, false); // 偵聽事件 resize
+  window.addEventListener("resize", resize, false);
 };
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 320,
-  height: 480,
+  width: 640,
+  height: 960,
   backgroundColor: "#000000",
   pixelArt: true,
   physics: {
     default: "matter",
-    // matter: {
-    //   debug: {
-    //     showBody: true,
-    //     showStaticBody: true,
-    //   },
-    // },
   },
   scene: SceneMatter,
   parent: "game-content",
