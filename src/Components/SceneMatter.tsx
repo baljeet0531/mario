@@ -43,7 +43,7 @@ export default class GameScene extends Phaser.Scene {
     infoImages.forEach((infoImage) => {
       infoImage.setVisible(false);
       infoImage.setInteractive();
-      infoImage.on("pointerup", () => {
+      infoImage.on("pointerdown", () => {
         infoImage.setVisible(false);
       });
     });
