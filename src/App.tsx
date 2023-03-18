@@ -27,8 +27,8 @@ window.onload = function () {
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 640,
-  height: 960,
+  width: 480,
+  height: 800,
   backgroundColor: "#000000",
   pixelArt: true,
   physics: {

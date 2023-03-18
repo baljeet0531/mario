@@ -4,14 +4,17 @@ export default class GameScene extends Phaser.Scene {
   private player!: Phaser.Physics.Matter.Image;
 
   preload() {
-    this.load.tilemapTiledJSON("map1", "assets/tilemaps/maps/mario2x.json");
+    this.load.tilemapTiledJSON(
+      "map1",
+      "assets/tilemaps/maps/mario480x800.json"
+    );
     this.load.image("tiles1", "assets/tilemaps/tiles/super_mario2x.png");
     this.load.image("tiles2", "assets/tilemaps/tiles/goomba_trans2x.png");
     this.load.image("player", "assets/tilemaps/tiles/mario_trans2x.png");
-    this.load.image("info1", "assets/info/info (1).jpg");
-    this.load.image("info2", "assets/info/info (2).jpg");
-    this.load.image("info3", "assets/info/info (3).jpg");
-    this.load.image("info4", "assets/info/info (4).jpg");
+    this.load.image("info1", "assets/info/intro1.png");
+    this.load.image("info2", "assets/info/intro2.png");
+    this.load.image("info3", "assets/info/intro3.png");
+    this.load.image("info4", "assets/info/intro4.png");
   }
   create() {
     this.matter.world.setBounds();
@@ -26,7 +29,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.matter.world.convertTilemapLayer(layer2).setBounds();
 
-    this.player = this.matter.add.image(120, 896, "player", undefined, {
+    this.player = this.matter.add.image(120, 736, "player", undefined, {
       label: "player",
     });
     this.player.setBounce(0.3);
@@ -35,10 +38,10 @@ export default class GameScene extends Phaser.Scene {
     this.matter.add.mouseSpring({ length: 1 });
 
     const infoImages = [
-      this.add.image(320, 480, "info1"),
-      this.add.image(320, 480, "info2"),
-      this.add.image(320, 480, "info3"),
-      this.add.image(320, 480, "info4"),
+      this.add.image(240, 400, "info1"),
+      this.add.image(240, 400, "info2"),
+      this.add.image(240, 400, "info3"),
+      this.add.image(240, 400, "info4"),
     ];
     infoImages.forEach((infoImage) => {
       infoImage.setVisible(false);
@@ -52,13 +55,13 @@ export default class GameScene extends Phaser.Scene {
       event.pairs.forEach(({ collision }: any) => {
         const { id } = collision.bodyA;
         const { y } = collision.normal;
-        if (id === 5 && y === -1) {
+        if (id === 13 && y === 1) {
           infoImages[0].setVisible(true);
-        } else if (id === 9 && y === -1) {
-          infoImages[1].setVisible(true);
         } else if (id === 11 && y === -1) {
+          infoImages[1].setVisible(true);
+        } else if (id === 9 && y === -1) {
           infoImages[2].setVisible(true);
-        } else if (id === 13 && y === 1) {
+        } else if (id === 5 && y === -1) {
           infoImages[3].setVisible(true);
         }
       });
@@ -67,16 +70,16 @@ export default class GameScene extends Phaser.Scene {
 
   update() {
     this.player.setAngularVelocity(0);
-    if (this.player.x > 640) {
-      this.player.setX(640);
+    if (this.player.x > 480) {
+      this.player.setX(480);
       this.player.setVelocity(0);
     }
     if (this.player.x < 0) {
       this.player.setX(0);
       this.player.setVelocity(0);
     }
-    if (this.player.y > 896) {
-      this.player.setY(880);
+    if (this.player.y > 736) {
+      this.player.setY(720);
       this.player.setVelocity(0);
     }
     if (this.player.y < 0) {
