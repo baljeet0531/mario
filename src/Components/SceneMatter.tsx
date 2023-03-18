@@ -4,7 +4,6 @@ export default class GameScene extends Phaser.Scene {
   private player!: Phaser.Physics.Matter.Image;
 
   preload() {
-    // this.load.tilemapTiledJSON("map1", "assets/tilemaps/maps/mario2x.json");
     this.load.tilemapTiledJSON(
       "map1",
       "assets/tilemaps/maps/mario480x800.json"
@@ -16,10 +15,6 @@ export default class GameScene extends Phaser.Scene {
     this.load.image("info2", "assets/info/intro2.png");
     this.load.image("info3", "assets/info/intro3.png");
     this.load.image("info4", "assets/info/intro4.png");
-    // this.load.image("info1", "assets/info/info (1).jpg");
-    // this.load.image("info2", "assets/info/info (2).jpg");
-    // this.load.image("info3", "assets/info/info (3).jpg");
-    // this.load.image("info4", "assets/info/info (4).jpg");
   }
   create() {
     this.matter.world.setBounds();
@@ -37,9 +32,6 @@ export default class GameScene extends Phaser.Scene {
     this.player = this.matter.add.image(120, 736, "player", undefined, {
       label: "player",
     });
-    // this.player = this.matter.add.image(120, 896, "player", undefined, {
-    //   label: "player",
-    // });
     this.player.setBounce(0.3);
     this.player.setFriction(0.9);
 
@@ -50,10 +42,6 @@ export default class GameScene extends Phaser.Scene {
       this.add.image(240, 400, "info2"),
       this.add.image(240, 400, "info3"),
       this.add.image(240, 400, "info4"),
-      // this.add.image(320, 480, "info1"),
-      // this.add.image(320, 480, "info2"),
-      // this.add.image(320, 480, "info3"),
-      // this.add.image(320, 480, "info4"),
     ];
     infoImages.forEach((infoImage) => {
       infoImage.setVisible(false);
